@@ -1,0 +1,28 @@
+{
+  "name": "service_level_app",
+  "version": "1.0.0",
+  "description": "sre-hands_on",
+  "main": "slapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erivansousa/ServiceLevelApp.git"
+  },
+  "keywords": [
+    "hands_on"
+  ],
+  "author": "Erivan Sousa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erivansousa/ServiceLevelApp/issues"
+  },
+  "homepage": "https://github.com/erivansousa/ServiceLevelApp#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "node-json-db": "^0.7.3"
+  }
+}

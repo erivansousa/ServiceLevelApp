@@ -1,0 +1,37 @@
+{
+    "server-start-count": 5,
+    "urls": [
+        {
+            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
+            "succesfulRespSLO": "99.1",
+            "fastRespSLO": "90",
+            "qtdRequests": 0,
+            "qtdSuccesResp": 0,
+            "qtdFastResp": 0
+        },
+        {
+            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
+            "succesfulRespSLO": "99.1",
+            "fastRespSLO": "90",
+            "qtdRequests": 0,
+            "qtdSuccesResp": 0,
+            "qtdFastResp": 0
+        },
+        {
+            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
+            "succesfulRespSLO": "99.1",
+            "fastRespSLO": "90",
+            "qtdRequests": 0,
+            "qtdSuccesResp": 0,
+            "qtdFastResp": 0
+        },
+        {
+            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
+            "succesfulRespSLO": "99.1",
+            "fastRespSLO": "90",
+            "qtdRequests": 0,
+            "qtdSuccesResp": 0,
+            "qtdFastResp": 0
+        }
+    ]
+}
