@@ -17,6 +17,7 @@ module.exports = function(){
         }
     }
 
+    //store the structure and some behaviors to process the url data
     this.URL = function(){
             this.url = '';
             this.succesfulRespSLO = 0;

@@ -1,1 +1,1 @@
-{}
+{"server-start-count":1,"urls":[{"url":"www.google.com","succesfulRespSLO":20,"fastRespSLO":15,"qtdRequests":25,"qtdSuccesResp":24,"qtdFastResp":0,"succesfulRespSLI":0.96,"fastRespSLI":0}],"stOk":true,"millis":469}

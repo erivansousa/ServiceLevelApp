@@ -1,5 +1,6 @@
 var slapp = require('express')();
 var params = require('./app/model/parameters.js');
+var db = require('./app/model/database.js')();
 var process = require('./app/model/process.js')(params);
 var bodyParser = require('body-parser');
 
@@ -7,7 +8,6 @@ slapp.use(bodyParser.urlencoded({extended:true}));
 slapp.set('view engine', 'ejs');
 slapp.set('views', './app/views');
 
-var db = process.getDataBase();
 db.refreshExecCount();
 
  //default view file on the views directory

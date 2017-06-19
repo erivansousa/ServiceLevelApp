@@ -20,12 +20,13 @@ module.exports = function(parameters){
             
             var initialTime = Date.now();
             var start;                
-            //make and measure the request
+            
+            //make the request, checks its time and status code
             http.get({host: register.url, path: '/'}, function(res){
                 var time = Date.now() - initialTime;
                 db.getConnection().push('/millis', time, true);
                 
-                if((200 <= res.statusCode <= 499)){
+                if(200 <= res.statusCode <= 499){
                     db.getConnection().push('/stOk', true, true);
                 }                
             }).on('error', function(err){
@@ -51,9 +52,11 @@ module.exports = function(parameters){
             register.fastRespSLI = db.URL()
                 .calcFastRespSLI(register.qtdFastResp, register.qtdRequests);
             
-            //store the measures result
+            //replaces the measures result on the database
             db.getConnection().push("/urls["+i+"]", register, true);
         }
+
+        //clean up the temp data on the "database"
         db.getConnection().push('/stOk', false, true);
         db.getConnection().push('/millis', 0, true);    
     }
