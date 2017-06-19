@@ -1,25 +1,20 @@
 var db = require('./database.js')();
 var http = require('http');
 
-module.exports = function(parameters){
-    this.getDataBase = function(){
-        return db;
-    }
-    
+module.exports = function(parameters){    
     this.refreshSLI = function(){
         var urls = '';
         try{
             urls = db.getConnection().getData('/urls');
         } catch(error){
-            //when any urls was stored
+            //when wasn't any urls stored
             return;
         }
 
         for(var i = 0; i < urls.length; i++){
             var register = urls[i];
             
-            var initialTime = Date.now();
-            var start;                
+            var initialTime = Date.now();                
             
             //make the request, checks its time and status code
             http.get({host: register.url, path: '/'}, function(res){
