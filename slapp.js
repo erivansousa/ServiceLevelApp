@@ -1,23 +1,48 @@
 var slapp = require('express')();
-var db = require('./app/model/database.js')();
+var process = require('./app/model/process.js')();
 var bodyParser = require('body-parser');
 slapp.use(bodyParser.urlencoded({extended:true}));
 
 slapp.set('view engine', 'ejs');
 slapp.set('views', './app/views');
+
+var db = process.getDataBase();
 db.refreshExecCount();
 
  //default view file on the views directory
 slapp.get('/', function(req, res){
-    res.render("index");
+    try{
+        res.render("index", {urls: db.getConnection().getData('/urls')});
+    } catch(error){
+        res.render("index", {urls: null});
+    }
 });
 
 slapp.post('/refresh', function(req, res){
-    var dataBody = req.body;
-    console.log(dataBody.url);
-    db.saveURL(dataBody.url, dataBody.sRespSLO, dataBody.fRespSLO);
-    //res.send(dataBody);
+    console.log("refresh requested");
+    try{
+        res.send({urls: db.getConnection().getData('/urls')});
+    } catch(error){
+        res.send({urls: null});
+    }
 });
+
+//include a new url
+slapp.post('/include', function(req, res){
+    console.log("include requested");
+    var dataBody = req.body;
+    db.saveURL(dataBody.url, new Number(dataBody.sRespSLO), new Number(dataBody.fRespSLO));
+    res.send({urls: db.getConnection().getData('/urls')});
+});
+
+//delete all the url database
+slapp.post('/delAll', function(req, res){
+   console.log("delete all requested");
+   db.getConnection().delete('/urls');
+   res.send(null);
+});
+
+process.loop();
 
 //start server
 slapp.listen(3000, function(){

@@ -2,40 +2,109 @@
 <html lang="pt-br">    
     <head>
         <meta charset="utf-8"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
-        <script>
-            function testClick(){
-                alert("sdfasdfasdf");
-            }
-        </script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     </head>
     <body>
-       <h1>pagina principal</h1> 
-       <div id="form_entrada" style="align-self: right">
-           <form action="/refresh" method="post">
-               <table>
-                   <tr>
-                       <td>URL:</td>
-                       <td><input type="text" name="url" id="url"/></td>
-                   </tr>
-                   <tr>
-                       <td>Success Response SLO:</td>
-                       <td><input type="text" name="sRespSLO" id="suscesful-responses"/></td>
-                   </tr>
-                   <tr>
-                       <td>Fast Response SLO:</td>
-                       <td><input type="text" name="fRespSLO" id="fast-responses"/></td>
-                   </tr>
-                   <tr>
-                       <td><input id="btn-inserir" type="submit" value="inserir"/>
-                       <a href="./refresh"> teste</a>
-                       </td>
-                   </tr>
-                </table>
+       <div id="form_entrada" class="container">
+            <h1>Service Level Indicator</h1> 
+            <form id="form1" class="navbar-form navbar-left" method="post">
+                <div class="form-group">
+                    <!--<input type="text" class="form-control" placeholder="Search">-->
+                    <input type="text" name="url" id="url" class="form-control" placeholder="Url"/>
+                    <input type="text" name="sRespSLO" id="suscesful-responses" class="form-control" placeholder="Succesful Responses SLO"/>
+                    <input type="text" name="fRespSLO" id="fast-responses" class="form-control" placeholder="Fast Responses SLO"/>
+                </div>
+                <input id="btn-insert" type="button" value="Insert" class="btn btn-default"/>
+                <input id="btn-delAll" type="button" value="Delete All" class="btn btn-default"/>
            </form>           
        </div>
-       <div id="list-urls-statistcs" style="align-self: left">
-
+       <div class="container"> 
+       <div class="panel panel-default">
+            <div class="panel-heading">Statistcs</div>
+            <div id="list-urls-statistcs" class="panel">              
+            </div>
        </div>
+       
+        </div>
+
+        <!--======================================================================================================================-->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+         <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            var form = document.forms[0];            
+            function getHtmlTableHeader(){
+                var html = "<table class='table table-striped'>";
+                html += "<tr>";
+                html += "<th>URL</th>";
+                html += "<th>Succesful Responses SLO (%)</th>";
+                html += "<th>Fast Responses SLO (%)</th>";
+                html += "<th>#Requests</th>";
+                html += "<th>#Succesful Responses</th>";
+                html += "<th>#Fast Responses</th>";
+                html += "<th>Succesful Responses SLI (%)</th>";
+                html += "<th>Fast Responses SLI (%)</th>";
+                html += "</tr>";
+                return html;
+            }
+            function getHtmlTable(data){                
+                var html = getHtmlTableHeader();
+                var array = JSON.parse(data);
+                console.log(array);
+                if(array != undefined){
+                    for(var i = 0; i < array.length; i++){
+                        var reg = array[i];
+                        html += "<tr>";
+                        html += "<td>"+reg.url+"</td>";
+                        html += "<td>"+reg.succesfulRespSLO+"</td>";
+                        html += "<td>"+reg.fastRespSLO+"</td>";
+                        html += "<td>"+reg.qtdRequests+"</td>";
+                        html += "<td>"+reg.qtdSuccesResp+"</td>";
+                        html += "<td>"+reg.qtdFastResp+"</td>";
+                        if(parseFloat((reg.succesfulRespSLI * 100).toFixed(2)) < reg.succesfulRespSLO){
+                            html += "<td class='danger'>"+parseFloat((reg.succesfulRespSLI * 100).toFixed(2))+"</td>";
+                        } else {
+                            html += "<td>"+parseFloat((reg.succesfulRespSLI * 100).toFixed(2))+"</td>";
+                        }
+
+                        if(parseFloat((reg.fastRespSLI * 100).toFixed(2)) < reg.fastRespSLO){
+                            html += "<td class='danger'>"+parseFloat((reg.fastRespSLI * 100).toFixed(2))+"</td>";
+                        } else {
+                            html += "<td>"+parseFloat((reg.fastRespSLI * 100).toFixed(2))+"</td>";
+                        }
+                                                            
+                        html += "</tr>";
+                    }
+                }
+                return html += "</table>";
+            }
+            $(document).ready(function(){
+                $("#list-urls-statistcs").html(getHtmlTableHeader()+ "</table>");
+                
+                $("#btn-insert").click(function(){
+                    $.post("./include", JSON.parse(JSON.stringify($("#form1").serializeArray())), function(data, status){
+                        $("#list-urls-statistcs").html(getHtmlTable(data.urls));
+                    });
+                });
+                $("#btn-delAll").click(function(){
+                    $.post("./delAll", null, function(data, status){
+                        $("#list-urls-statistcs").html(getHtmlTableHeader()+ "</table>");
+                    });
+                });               
+            });
+
+            setInterval(function(){
+                     $.post("./refresh", null, function(data, status){                 
+                         $("#list-urls-statistcs").html(getHtmlTable(JSON.stringify(data.urls)));
+                    });
+                }, 5000);
+        </script>
+         <!--======================================================================================================================-->
     </body>
+
 </html>

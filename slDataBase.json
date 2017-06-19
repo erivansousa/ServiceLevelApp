@@ -1,37 +1,17 @@
 {
-    "server-start-count": 5,
+    "server-start-count": 214,
+    "millis": 231,
+    "stOk": true,
     "urls": [
         {
-            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
-            "succesfulRespSLO": "99.1",
-            "fastRespSLO": "90",
-            "qtdRequests": 0,
-            "qtdSuccesResp": 0,
-            "qtdFastResp": 0
-        },
-        {
-            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
-            "succesfulRespSLO": "99.1",
-            "fastRespSLO": "90",
-            "qtdRequests": 0,
-            "qtdSuccesResp": 0,
-            "qtdFastResp": 0
-        },
-        {
-            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
-            "succesfulRespSLO": "99.1",
-            "fastRespSLO": "90",
-            "qtdRequests": 0,
-            "qtdSuccesResp": 0,
-            "qtdFastResp": 0
-        },
-        {
-            "ulr": "https://www.youtube.com/watch?v=oCS7BoBwzFM",
-            "succesfulRespSLO": "99.1",
-            "fastRespSLO": "90",
-            "qtdRequests": 0,
-            "qtdSuccesResp": 0,
-            "qtdFastResp": 0
+            "url": "www.google.com",
+            "succesfulRespSLO": 10,
+            "fastRespSLO": 86.4,
+            "qtdRequests": 789,
+            "qtdSuccesResp": 785,
+            "qtdFastResp": 514,
+            "succesfulRespSLI": 0.9949302915082383,
+            "fastRespSLI": 0.6514575411913816
         }
     ]
 }

@@ -16,25 +16,34 @@ module.exports = function(){
         }
     }
 
-     this.saveURL = function(url, succesfulResp, fastResp){
-        var URL = function(url, succesfulResp, fastResp){
-            this.ulr = url;
-            this.succesfulRespSLO = succesfulResp;
-            this.fastRespSLO = fastResp;
+    this.URL = function(){
+            this.url = '';
+            this.succesfulRespSLO = 0;
+            this.fastRespSLO = 0;
             this.qtdRequests=0;
             this.qtdSuccesResp=0;
             this.qtdFastResp=0;
+            this.succesfulRespSLI = 0;
+            this.fastRespSLI = 0;
 
-            this.succesfulRespSLI = function(){
-                return this.qtdSuccesResp / this.qtdRequests;
+            this.init = function(url, succesfulResp, fastResp){
+                this.url = url;
+                this.succesfulRespSLO = succesfulResp;
+                this.fastRespSLO = fastResp;
+                return this;
             }
-            this.fastRespSLI = function(){
-                return this.qtdFastResp / this.qtdRequests;
+
+            this.calcSuccesfulRespSLI = function(qtdSuccesResp, qtdRequests){
+                return qtdSuccesResp / qtdRequests;
+            }
+            this.calcFastRespSLI = function(qtdFastResp,  qtdRequests){
+                return qtdFastResp / qtdRequests;
             }
             return this;
         }
-        
-        this.getConnection().push("/urls[]", JSON.parse(JSON.stringify(new URL(url, succesfulResp, fastResp))));
+
+     this.saveURL = function(url, succesfulResp, fastResp){        
+        this.getConnection().push("/urls[]", new URL().init(url, succesfulResp, fastResp));
      }
     return this;
 }
