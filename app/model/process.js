@@ -1,6 +1,7 @@
 var db = require('./database.js')();
 var http = require('http');
-module.exports = function(){
+
+module.exports = function(parameters){
     this.getDataBase = function(){
         return db;
     }
@@ -27,14 +28,16 @@ module.exports = function(){
                 if((200 <= res.statusCode <= 499)){
                     db.getConnection().push('/stOk', true, true);
                 }                
-            }).on('error', function(err){});
+            }).on('error', function(err){
+                db.getConnection().push('/stOk', false, true);
+            });
 
             var responseTime = Date.now() - initialTime;
             register.qtdRequests += 1;
 
             
             try{
-                if(db.getConnection().getData('/millis') <= 300){
+                if(db.getConnection().getData('/millis') <= parameters.slo_limit_response_millis){
                     register.qtdFastResp += 1;
                 }
 
@@ -58,7 +61,7 @@ module.exports = function(){
     this.loop = function(){
         console.log("loop is running...");
         refreshSLI();      
-        setTimeout(loop, 5000);
+        setTimeout(loop, parameters.process_running_millis);
     }
 
     return this;

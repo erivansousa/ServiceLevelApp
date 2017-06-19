@@ -1,17 +1,1 @@
-{
-    "server-start-count": 214,
-    "millis": 231,
-    "stOk": true,
-    "urls": [
-        {
-            "url": "www.google.com",
-            "succesfulRespSLO": 10,
-            "fastRespSLO": 86.4,
-            "qtdRequests": 789,
-            "qtdSuccesResp": 785,
-            "qtdFastResp": 514,
-            "succesfulRespSLI": 0.9949302915082383,
-            "fastRespSLI": 0.6514575411913816
-        }
-    ]
-}
+{}

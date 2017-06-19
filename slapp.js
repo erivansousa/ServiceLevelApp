@@ -1,8 +1,9 @@
 var slapp = require('express')();
-var process = require('./app/model/process.js')();
+var params = require('./app/model/parameters.js');
+var process = require('./app/model/process.js')(params);
 var bodyParser = require('body-parser');
-slapp.use(bodyParser.urlencoded({extended:true}));
 
+slapp.use(bodyParser.urlencoded({extended:true}));
 slapp.set('view engine', 'ejs');
 slapp.set('views', './app/views');
 
@@ -12,9 +13,10 @@ db.refreshExecCount();
  //default view file on the views directory
 slapp.get('/', function(req, res){
     try{
-        res.render("index", {urls: db.getConnection().getData('/urls')});
+        res.render("index", {refresh_time: params.screen_refresh_millis, 
+            urls: db.getConnection().getData('/urls')});
     } catch(error){
-        res.render("index", {urls: null});
+        res.render("index", {refresh_time: params.screen_refresh_millis, urls: null});
     }
 });
 
@@ -45,7 +47,7 @@ slapp.post('/delAll', function(req, res){
 process.loop();
 
 //start server
-slapp.listen(3000, function(){
+slapp.listen(params.server_port, function(){
     console.log("Server ON");
 });
 

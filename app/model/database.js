@@ -1,9 +1,10 @@
 var JsonDB = require('node-json-db');
-//The second argument tells the DB to save after each push 
-//The third argument asks JsonDB to save the database in an human readable format.
+var params = require('./parameters.js');
 module.exports = function(){
     this.getConnection = function(){
-        return new JsonDB("slDataBase", true, true);
+        //The second argument tells the DB to save after each push 
+        //The third argument asks JsonDB to save the database in an human readable format.
+        return new JsonDB(params.database_file_name, true, false);
     }
 
     this.refreshExecCount = function(){        
